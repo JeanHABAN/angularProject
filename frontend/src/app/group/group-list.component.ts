@@ -1,15 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { GroupStateService, IGroup } from './group-state.service';
+import { Router } from '@angular/router';
+import { UserService, initial_state_value } from '../user/user.service';
+
 
 @Component({
   selector: 'app-group-list',
   template: `
-    <p>
-      group-list works!
-    </p>
+    <div>
+      <a [routerLink]="['', 'group', 'add']">Add Group</a>
+      <a [routerLink]="['', 'group', 'request']">Pending Request</a>
+      <a (click)="logout()">Logout</a>
+    </div>
+    <div><input placeholder="search group here" /></div>
+    <div>
+      <table>
+        <th>Title</th>
+        <th>Action</th>
+        <tr *ngFor="let g of groupsList">
+          <td>{{ g.title }}</td>
+          <td>
+            <button (click)="gotoMember()">Members</button>
+            <button (click)="gotoDetails()">Details</button>
+            <button (click)="gotoTransactions()">Transactions</button>
+          </td>
+        </tr>
+      </table>
+    </div>
   `,
-  styles: [
-  ]
+  styles: [],
 })
 export class GroupListComponent {
-
+  groupService = inject(GroupStateService);
+  groupsList: IGroup[] = [];
+  private router = inject(Router);
+  private userService = inject(UserService);
+  logout() {
+    localStorage.clear();
+    this.userService.state.set(initial_state_value);
+    this.router.navigate(['']);
+  }
+  constructor() {
+    this.groupService
+      .getAllGroups()
+      .subscribe((res) => (this.groupsList = res.data));
+  }
+  gotoMember() {
+    this.router.navigate(['', 'group', 'addmember']);
+  }
+  gotoTransactions() {
+    this.router.navigate(['', 'group', 'transaction']);
+  }
+  gotoDetails(){
+    this.router.navigate(['', 'group', 'detail']);
+  }
 }

@@ -8,6 +8,7 @@ import { PendingRequestComponent } from './pending-request.component';
 import { TransactionComponent } from './transaction.component';
 import { ReportComponent } from './report.component';
 import { RouterModule } from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       { path: 'list', component: GroupListComponent },
       { path: 'add', component: AddGroupComponent },

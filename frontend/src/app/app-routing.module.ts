@@ -2,6 +2,7 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome.component';
 import { LoginComponent } from './user/login.component';
+import { checkTokenGuard } from './check-token.guard';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent, pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
     path: 'group',
     loadChildren: () =>
       import('./group/group.module').then((module) => module.GroupModule),
+    canActivate: [checkTokenGuard],
   },
   { path: '**', redirectTo: '' },
 ];
