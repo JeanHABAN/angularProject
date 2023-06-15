@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
-import { IResponse, IUser } from '../user/user.service';
+import { IMember, IResponse, IUser } from '../user/user.service';
 
 
 @Injectable({
@@ -23,6 +23,21 @@ export class GroupStateService {
   getAllGroups() {
     return this.http.get<IResponse<IGroup[]>>(`${env.SERVER_URL}groups`);
   }
+  getMembersFromGroup(groupId: string) {
+    return this.http.get<IResponse<IMember[]>>(
+      `${env.SERVER_URL}groups/${groupId}/members`
+    );
+  }
+  addMember(groupId: string, member: IMember) {
+    return this.http.post<IResponse<boolean>>(
+      `${env.SERVER_URL}groups/${groupId}/members`,
+      member
+    );
+  }
+  removeMember(groupId: string, member_id: string) {
+    return this.http.delete<IResponse<boolean>>(
+      `${env.SERVER_URL}groups/${groupId}/members/${member_id}`)
+  }
 
   addTransaction(group_id:string, transaction: ITransaction) {
    
@@ -40,10 +55,10 @@ export class GroupStateService {
 }
 
 export interface IGroup {
-  _id: string,
-  title: string,
-  members?: Array<IUser>,
-  transactions: Array<ITransaction>,
+  _id: string;
+  title: string;
+  members?: Array<IUser>;
+  transactions: Array<ITransaction>;
 }
 export interface ITransaction {
   title: string,
@@ -55,3 +70,8 @@ export interface ITransaction {
   receipt : { filename: string; originalname: string }
 }
 
+export interface IInvitees {
+  user_id: string;
+  fullname: string;
+  email: string;
+}

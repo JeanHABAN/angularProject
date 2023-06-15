@@ -32,10 +32,18 @@ export class UserService {
 }
 
 export interface IUser {
-  // _id?: string,
+   _id: string,
   fullname: string;
   email: string;
   password: string;
+}
+
+export interface IMember{
+  user_id: string,
+  fullname: string,
+  email: string,
+  pending: boolean,
+  _id: string
 }
 
 export interface IResponse<T = unknown> {

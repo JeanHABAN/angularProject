@@ -71,6 +71,7 @@ export const add_member = async (req, res, next) => {
     try {
         const { group_id } = req.params;
         const { tokenData } = req.body;
+        console.log("email: ", req.body.email);
         const member_to_add = await usersModel
             .findOne({ email: req.body.email })
             .lean();
@@ -99,6 +100,28 @@ export const add_member = async (req, res, next) => {
         next(error);
     }
 };
+
+export const remove_member = async (req, res, next) => {
+    try {
+        const { group_id, member_id } = req.params;
+        const { tokenData } = req.body;
+        const results = await groupsModel.updateOne(
+            {
+                _id: group_id,
+                members: {
+                    $elemMatch: { user_id: tokenData._id, pending: false },
+                },
+            },
+            {
+                $pull: { members: { user_id: member_id, pending: true } },
+            }
+        );
+        res.json({ success: true, data: results.modifiedCount ? true : false });
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const get_members = async (req, res, next) => {
     try {
         const { tokenData } = req.body;

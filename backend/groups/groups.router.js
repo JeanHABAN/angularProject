@@ -8,6 +8,7 @@ import {
     get_members,
     get_transaction_by_id,
     get_transactions,
+    remove_member,
     update_member_pending_status_by_id,
 } from "./groups.controller.js";
 import { checkToken } from "../users/users.middleware.js";
@@ -18,6 +19,7 @@ router.post("/", add_group);
 router.get("/", get_groups); // (both user in, and pending groups with ?pending=true)
 
 router.post("/:group_id/members", add_member);
+router.delete("/:group_id/members/:member_id", remove_member);
 router.get("/:group_id/members/", get_members);
 router.get("/:group_id/members/:member_id", update_member_pending_status_by_id);
 
