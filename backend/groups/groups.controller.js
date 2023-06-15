@@ -5,9 +5,8 @@ import groupsModel from "./groups.model.js";
 
 export const add_group = async (req, res, next) => {
     try {
-        console.log(req.body);
+
         const { tokenData } = req.body;
-        console.log(tokenData);
         const new_group = req.body;
         const results = await groupsModel.create({
             ...new_group,
@@ -21,6 +20,7 @@ export const add_group = async (req, res, next) => {
             ],
         });
         res.json({ success: true, data: results });
+        console.log('yes check this ',results)
     } catch (error) {
         next(error);
     }

@@ -30,9 +30,10 @@ import {ReactiveFormsModule} from '@angular/forms'
         path: 'addmember',
         component: AddMembersComponent,
       },
-      { path: 'detail', component: GroupDetailComponent },
+      { path: ':group_id/detail', component: GroupDetailComponent },
       { path: 'request', component: PendingRequestComponent },
-      { path: 'transaction', component: TransactionComponent },
+      { path: ':group_id/transaction', component: TransactionComponent },
+      {path:'report', component: ReportComponent}
     ]),
   ],
 })

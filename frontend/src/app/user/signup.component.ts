@@ -6,7 +6,7 @@ import { UserService, IUser, IToken, IState } from './user.service';
 @Component({
   selector: 'app-signup',
   template: `
-    <div class="login-page">
+    
     <div class="form">
     <form class="login-form" [formGroup]="signupForm" (ngSubmit)="handleSignup()">
       <input type="text" placeholder="full name" formControlName="fullname"/>

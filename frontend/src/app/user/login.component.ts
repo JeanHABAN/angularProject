@@ -122,8 +122,8 @@ private userService = inject(UserService);
 private router = inject(Router);
 
 signForm = inject(FormBuilder).group({
-  email: ["theo@miu.edu", Validators.required],
-  password: ["123456", Validators.required]
+  email: ["duyen@miu.edu", Validators.required],
+  password: ["123", Validators.required]
 
 })
 handleSignin(){

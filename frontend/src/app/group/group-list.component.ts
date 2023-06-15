@@ -21,8 +21,8 @@ import { UserService, initial_state_value } from '../user/user.service';
           <td>{{ g.title }}</td>
           <td>
             <button (click)="gotoMember()">Members</button>
-            <button (click)="gotoDetails()">Details</button>
-            <button (click)="gotoTransactions()">Transactions</button>
+            <button (click)="gotoDetails(g._id)">Details</button>
+            <button (click)="gotoTransactions(g._id)">Transactions</button>
           </td>
         </tr>
       </table>
@@ -44,14 +44,16 @@ export class GroupListComponent {
     this.groupService
       .getAllGroups()
       .subscribe((res) => (this.groupsList = res.data));
+
   }
   gotoMember() {
     this.router.navigate(['', 'group', 'addmember']);
   }
-  gotoTransactions() {
-    this.router.navigate(['', 'group', 'transaction']);
+  gotoTransactions(group_id: string) {
+    console.log('id ',group_id)
+    this.router.navigate(['', 'group', group_id,'transaction']);
   }
-  gotoDetails(){
-    this.router.navigate(['', 'group', 'detail']);
+  gotoDetails(group_id: string){
+    this.router.navigate(['', 'group',group_id, 'detail']);
   }
 }
