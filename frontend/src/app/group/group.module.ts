@@ -8,7 +8,8 @@ import { PendingRequestComponent } from './pending-request.component';
 import { TransactionComponent } from './transaction.component';
 import { ReportComponent } from './report.component';
 import { RouterModule } from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FilterPipePipe } from './filter-pipe.pipe'; // -> imported filter pipe
 
 @NgModule({
   declarations: [
@@ -19,10 +20,12 @@ import {ReactiveFormsModule} from '@angular/forms'
     PendingRequestComponent,
     TransactionComponent,
     ReportComponent,
+    FilterPipePipe
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterModule.forChild([
       { path: 'list', component: GroupListComponent },
       { path: 'add', component: AddGroupComponent },
@@ -33,7 +36,9 @@ import {ReactiveFormsModule} from '@angular/forms'
       { path: ':group_id/detail', component: GroupDetailComponent },
       { path: 'request', component: PendingRequestComponent },
       { path: ':group_id/transaction', component: TransactionComponent },
-      {path:'report', component: ReportComponent}
+      {path:'report', component: ReportComponent},
+  
+
     ]),
   ],
 })

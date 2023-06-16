@@ -1,11 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Pipe, PipeTransform } from '@angular/core';
 import { GroupStateService, IGroup, ITransaction } from './group-state.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-group-detail',
   template: `
 <div class="table-container">
+  <input type="text" 
+  name="search" 
+  placeholder="search transanction" 
+ 
+  />
+  
 <table>
 <thead>
       <tr>
@@ -27,8 +34,8 @@ import { Router, ActivatedRoute } from '@angular/router';
         <td>{{ trans.date| date}}</td>
         <td>{{ trans.paid_by.fullname }}</td>
         <td>
-        <a href="#" routerLink="['/report']">{{ trans.receipt.originalname }}</a>
-             
+        <a [routerLink]="['group',group_id,'detail','view']">{{ trans.receipt.originalname }}</a>
+        
        </td>
       </tr>
     </tbody>
@@ -67,20 +74,37 @@ export class GroupDetailComponent {
   private groupService = inject(GroupStateService);
   private router = inject(Router)
   private activatedRoute = inject(ActivatedRoute)
-  transactions: ITransaction[] = []; 
-  private group_id = this.activatedRoute.snapshot.paramMap.get('group_id')
+    searchText: string= ''
 
-constructor(){
-  if(this.group_id){
-    this.groupService.getAllTransactions(this.group_id).subscribe(response =>{
-      if(response.success){
-        this.transactions = response.data
-      }
-    })
+  transactions: ITransaction[] = [];
 
+  filteredTransactions: ITransaction[] = [];
+
+  group_id = this.activatedRoute.snapshot.paramMap.get('group_id')
+
+  constructor() {
+    if (this.group_id) {
+      this.groupService.getAllTransactions(this.group_id).subscribe(response => {
+        if (response.success) {
+          this.transactions = response.data
+        }
+      })
+
+    }
   }
-}
+  // filterTransactions() {
+  //   const searchText = this.form.value.searchText?.toLowerCase().trim();
+  //   console.log(searchText);
+  //   if (!searchText) {
+  //     this.filteredTransactions = this.transactions;
+  //     return;
+  //   }
 
-
-
+  //   this.filteredTransactions = this.transactions.filter(trans =>
+  //     trans.title.toLowerCase().includes(searchText) ||
+  //     trans.paid_by.fullname.toLowerCase().includes(searchText) ||
+  //     trans.category.toLowerCase().includes(searchText) ||
+  //     trans.date.toString().toLowerCase().includes(searchText)
+  //   );
+  // }
 }

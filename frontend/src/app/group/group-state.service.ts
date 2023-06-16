@@ -4,6 +4,7 @@ import { environment as env } from 'src/environments/environment';
 import { IMember, IResponse, IUser } from '../user/user.service';
 
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +17,8 @@ export class GroupStateService {
   };
   private http = inject(HttpClient);
   groupState = signal(this.initial_state_value);
+  
+  
 
   addGroup(data: string) {
     return this.http.post<IResponse>(`${env.SERVER_URL}groups`, data);
@@ -52,6 +55,18 @@ export class GroupStateService {
       `${env.SERVER_URL}groups/${group_id}/transactions`
     );
   }
+
+  getStatus(){
+    return this.http.get<IResponse<IGroup[]>>(
+      `${env.SERVER_URL}groups?pending=true`
+    );
+  }
+
+  updateMemberPendingStatus(group_id: string, user_id: string){
+  return this.http.get<IResponse<Boolean>>(
+    `${env.SERVER_URL}groups/${group_id}/members/${user_id}`
+  )
+  }
 }
 
 export interface IGroup {
@@ -66,7 +81,7 @@ export interface ITransaction {
   paid_by: { user_id: string, fullname: String },
   category: string,
   amount: number,
-  date: number,
+  date: string,
   receipt : { filename: string; originalname: string }
 }
 
@@ -75,3 +90,4 @@ export interface IInvitees {
   fullname: string;
   email: string;
 }
+

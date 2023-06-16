@@ -6,6 +6,7 @@ import { UserService, initial_state_value } from '../user/user.service';
 @Component({
   selector: 'app-group-list',
   template: `
+ 
     <div>
       <a [routerLink]="['', 'group', 'add']">Add Group</a>
       <a [routerLink]="['', 'group', 'request']">Pending Request</a>
@@ -34,6 +35,7 @@ import { UserService, initial_state_value } from '../user/user.service';
             <button (click)="gotoTransactions(g._id)" [disabled]="showMember">
               Transactions
             </button>
+           
           </td>
         </tr>
       </table>

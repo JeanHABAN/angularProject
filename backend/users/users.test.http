@@ -11,6 +11,6 @@ POST http://localhost:3000/users/signin
 Content-Type: application/json
 
 {
-    "email": "duyen@miu.edu",
-    "password": "123"
+    "email": "theo@miu.edu",
+    "password": "123456"
 }

@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { UserService } from './user/user.service';
 import { addTokenInterceptor } from './add-token.interceptor';
 
+
 const boostrap = function (userService: UserService) {
   return () => {
     const state = localStorage.getItem('ANGULAR_PROJECT');

@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg4ZDEzO
 
 ###
 POST http://localhost:3000/groups/648a68b3a0270435bf13adab/transactions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg5ZWM4NjJmY2U2Y2E5NmU3ZDM2ZmEiLCJmdWxsbmFtZSI6ImR1eWVuIiwiZW1haWwiOiJkdXllbkBtaXUuZWR1IiwiaWF0IjoxNjg2ODU5MDQ1fQ.FqGLdudm0LvqW-83e6R-ecEow0ckLiISg5M1IwHGwGE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg5ZTU4ZjJmY2U2Y2E5NmU3ZDM2ZjUiLCJmdWxsbmFtZSI6IlRoZW8gU2FhZCIsImVtYWlsIjoidGhlb0BtaXUuZWR1IiwiaWF0IjoxNjg2ODczNjM2fQ.o_xyBEXjCpKEHaAGXiWXC_7InJLCB2axBupOsn6P9Jk
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -52,11 +52,11 @@ Cafe at the beach
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
-Food
+travel
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="amount"
 
-75
+700
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="date"
 

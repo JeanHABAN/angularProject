@@ -95,19 +95,15 @@ export class AddMembersComponent {
   }
   inviteMembers() {
     let oldMembersList: IMember[] = [];
-    console.log('current: ', this.membersList);
     let current: IMember[] = this.membersList;
     this.groupService.getMembersFromGroup(this.groupId).subscribe((res) => {
       oldMembersList = res.data;
-      console.log('old: ', oldMembersList);
-      console.log('current: ', current);
       const addedMembers = this.getFromBNotInA(oldMembersList, current);
       const removedMember = this.getFromBNotInA(
         current,
         oldMembersList
       );
-      console.log('added: ', addedMembers);
-      console.log('removed: ', removedMember);
+;
       for (let member of addedMembers) {
         if (member.pending) {
           this.groupService
@@ -145,9 +141,7 @@ export class AddMembersComponent {
   //}
   getFromBNotInA(A: Array<IMember>, B: Array<IMember>) {
     const dictionary = new Set(A.map((u) => u.user_id));
-    console.log('dic: ', dictionary);
     const result = B.filter((u) => !dictionary.has(u.user_id));
-    console.log('result: ', result);
     return result;
   }
 
