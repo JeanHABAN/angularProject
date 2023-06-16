@@ -27,13 +27,16 @@ import { UserService, initial_state_value } from '../user/user.service';
           <td>{{ g.title }}</td>
           <td>
             <button (click)="showAddMember(g._id)" [disabled]="showMember">
-              Members
+              Add Members
+            </button>
+            <button (click)="gotoAddTransaction(g._id)" [disabled]="showMember">
+              Add Transactions
             </button>
             <button (click)="gotoDetails(g._id)" [disabled]="showMember">
               Details
             </button>
-            <button (click)="gotoTransactions(g._id)" [disabled]="showMember">
-              Transactions
+            <button (click)="gotoReport(g._id)" [disabled]="showMember">
+              Report
             </button>
            
           </td>
@@ -59,22 +62,24 @@ export class GroupListComponent {
     this.groupService
       .getAllGroups()
       .subscribe((res) => (this.groupsList = res.data));
-
   }
   showAddMember(groupId: string) {
     this.showMember = true;
     this.selectedGroupId = groupId;
   }
-  gotoTransactions(group_id: string) {
-    console.log('id ',group_id)
-    this.router.navigate(['', 'group', group_id,'transaction']);
+  gotoAddTransaction(group_id: string) {
+    console.log('id ', group_id);
+    this.router.navigate(['', 'group', group_id, 'transactions', 'add']);
   }
-  gotoDetails(group_id: string){
+  gotoDetails(group_id: string) {
     this.router.navigate(['', 'group', group_id, 'detail']);
   }
-  receiveStatusAddingMember(status: boolean){
-    if( status) {
+  receiveStatusAddingMember(status: boolean) {
+    if (status) {
       this.showMember = false;
     }
+  }
+  gotoReport(groupId: string) {
+    this.router.navigate(['', 'group', groupId, 'report']);
   }
 }

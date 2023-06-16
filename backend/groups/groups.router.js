@@ -10,6 +10,7 @@ import {
     get_transactions,
     remove_member,
     update_member_pending_status_by_id,
+    sendEmails,
 } from "./groups.controller.js";
 import { checkToken } from "../users/users.middleware.js";
 
@@ -31,5 +32,6 @@ router.post(
 );
 router.get("/:group_id/transactions", get_transactions);
 router.get("/:group_id/transactions/:transaction_id", get_transaction_by_id);
+router.post("/send_emails", sendEmails);
 
 export default router;

@@ -8,7 +8,9 @@ import { PendingRequestComponent } from './pending-request.component';
 import { TransactionComponent } from './transaction.component';
 import { ReportComponent } from './report.component';
 import { RouterModule } from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
+import { AddTransactionComponent } from './add-transaction.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipePipe } from './filter-pipe.pipe'; // -> imported filter pipe
 
 @NgModule({
@@ -20,7 +22,8 @@ import { FilterPipePipe } from './filter-pipe.pipe'; // -> imported filter pipe
     PendingRequestComponent,
     TransactionComponent,
     ReportComponent,
-    FilterPipePipe
+    FilterPipePipe,
+    AddTransactionComponent,
   ],
   imports: [
     CommonModule,
@@ -35,10 +38,12 @@ import { FilterPipePipe } from './filter-pipe.pipe'; // -> imported filter pipe
       },
       { path: ':group_id/detail', component: GroupDetailComponent },
       { path: 'request', component: PendingRequestComponent },
-      { path: ':group_id/transaction', component: TransactionComponent },
-      {path:'report', component: ReportComponent},
-  
-
+      // { path: ':group_id/transactions', component: PendingTransactionsComponent },
+      {
+        path: ':group_id/transactions/add',
+        component: AddTransactionComponent,
+      },
+      { path: ':group_id/report', component: ReportComponent },
     ]),
   ],
 })

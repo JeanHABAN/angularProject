@@ -16,13 +16,13 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 <table>
 <thead>
       <tr>
-        <th>title</th>
-        <th>description</th>
-        <th>category</th>
-        <th>amount</th>
-        <th>date</th>
-        <th>paid_by</th>
-        <th>receipt</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Paid_by</th>
+        <th>Receipt</th>
       </tr>
     </thead>
     <tbody>

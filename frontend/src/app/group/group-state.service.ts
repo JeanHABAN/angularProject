@@ -4,21 +4,18 @@ import { environment as env } from 'src/environments/environment';
 import { IMember, IResponse, IUser } from '../user/user.service';
 
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class GroupStateService {
   private initial_state_value = {
-    _id:'',
+    _id: '',
     title: '',
     members: [],
     transactions: [],
   };
   private http = inject(HttpClient);
   groupState = signal(this.initial_state_value);
-  
-  
 
   addGroup(data: string) {
     return this.http.post<IResponse>(`${env.SERVER_URL}groups`, data);
@@ -39,35 +36,38 @@ export class GroupStateService {
   }
   removeMember(groupId: string, member_id: string) {
     return this.http.delete<IResponse<boolean>>(
-      `${env.SERVER_URL}groups/${groupId}/members/${member_id}`)
-  }
-
-  addTransaction(group_id:string, transaction: ITransaction) {
-   
-    return this.http.post<IResponse<ITransaction>>(
-      `${env.SERVER_URL}groups/${group_id}/transactions`,
-      transaction
+      `${env.SERVER_URL}groups/${groupId}/members/${member_id}`
     );
   }
 
-  getAllTransactions(group_id:string){
-    return  this.http.get<IResponse<ITransaction[]>>(
+  addTransaction(group_id: string, data: FormData) {
+    return this.http.post<IResponse>(
+      `${env.SERVER_URL}groups/${group_id}/transactions`,
+      data
+    );
+  }
+
+  getAllTransactions(group_id: string) {
+    return this.http.get<IResponse<ITransaction[]>>(
       `${env.SERVER_URL}groups/${group_id}/transactions`
     );
   }
-
-  getStatus(){
+  getStatus() {
     return this.http.get<IResponse<IGroup[]>>(
       `${env.SERVER_URL}groups?pending=true`
     );
   }
 
-  updateMemberPendingStatus(group_id: string, user_id: string){
-  return this.http.get<IResponse<Boolean>>(
-    `${env.SERVER_URL}groups/${group_id}/members/${user_id}`
-  )
+  updateMemberPendingStatus(group_id: string, user_id: string) {
+    return this.http.get<IResponse<Boolean>>(
+      `${env.SERVER_URL}groups/${group_id}/members/${user_id}`
+    );
   }
 }
+
+
+
+
 
 export interface IGroup {
   _id: string;

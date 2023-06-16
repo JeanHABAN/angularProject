@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { IMember, IUser, UserService } from '../user/user.service';
 import { GroupStateService, IInvitees } from './group-state.service';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-add-members',
@@ -49,6 +50,7 @@ export class AddMembersComponent {
   isShown: boolean = false;
   private userService = inject(UserService);
   private groupService = inject(GroupStateService);
+  private emailService = inject(EmailService);
   constructor() {}
 
   ngOnInit() {
@@ -99,11 +101,7 @@ export class AddMembersComponent {
     this.groupService.getMembersFromGroup(this.groupId).subscribe((res) => {
       oldMembersList = res.data;
       const addedMembers = this.getFromBNotInA(oldMembersList, current);
-      const removedMember = this.getFromBNotInA(
-        current,
-        oldMembersList
-      );
-;
+      const removedMember = this.getFromBNotInA(current, oldMembersList);
       for (let member of addedMembers) {
         if (member.pending) {
           this.groupService
@@ -118,6 +116,16 @@ export class AddMembersComponent {
             .subscribe((res) => console.log(res));
         }
       }
+      let emails: string[] = [];
+      for (let m of addedMembers) {
+        emails.push(m.email);
+      }
+      const subject =
+        'Please signin into your SplitBills app to accept my request';
+      const body = "Hey guys. It's time to pay my money back, kakaka!!!";
+      this.emailService
+        .sendEmails(emails, subject, body)
+        .subscribe(console.log);
     });
 
     this.isCompleted.emit(true);

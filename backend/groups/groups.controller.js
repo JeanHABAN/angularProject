@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { ErrorResponse } from "../error.js";
 import usersModel from "../users/users.model.js";
 import groupsModel from "./groups.model.js";
+import axios from "axios";
 
 export const add_group = async (req, res, next) => {
     try {
@@ -223,5 +224,40 @@ export const get_transaction_by_id = async (req, res, next) => {
         res.json({ success: true, data: results[0].transactions || false });
     } catch (error) {
         next(error);
+    }
+};
+
+export const sendEmails = async (req, res, next) => {
+    const apiKey = "1b7e79100e11f0cdea9429cfb822ed0c-us20";
+    const serverPrefix = "us20";
+    const listId = "b47ee80b7e";
+    try {
+        const { emails, subject, body } = req.body;
+
+        const endpoint = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${listId}/members`;
+
+        const requests = emails.map((email) => {
+            const data = {
+                email_address: email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: "",
+                    LNAME: "",
+                },
+            };
+
+            return axios.post(endpoint, data, {
+                headers: {
+                    Authorization: `Bearer ${apiKey}`,
+                },
+            });
+        });
+
+        await axios.all(requests);
+
+        res.status(200).json({ message: "Emails sent successfully." });
+    } catch (error) {
+        console.error("Error sending emails:", error);
+        res.status(500).json({ error: "Error sending emails." });
     }
 };
