@@ -7,7 +7,10 @@ import groupsRouter from './groups/groups.router.js';
 import usersRouter from './users/users.router.js';
 import { checkToken } from './users/users.middleware.js'
 import { ErrorResponse } from './error.js';
-
+import path from 'path';
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 (async function () {
@@ -25,10 +28,15 @@ const app = express();
 })()
 
 
-app.use(cors())
+//app.use(cors())
+app.use(
+    cors({
+        origin: "http://localhost:4200",
+    })
+);
 app.use(morgan('dev'))
 app.use(json())
-
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 // routes
 app.use('/groups', checkToken, groupsRouter)
 app.use('/users', usersRouter)

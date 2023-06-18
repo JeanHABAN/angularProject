@@ -3,10 +3,16 @@ import { ErrorResponse } from "../error.js";
 import usersModel from "../users/users.model.js";
 import groupsModel from "./groups.model.js";
 import axios from "axios";
+import fs from "fs";
+import path from "path";
+
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 export const add_group = async (req, res, next) => {
     try {
-
         const { tokenData } = req.body;
         const new_group = req.body;
         const results = await groupsModel.create({
@@ -21,7 +27,7 @@ export const add_group = async (req, res, next) => {
             ],
         });
         res.json({ success: true, data: results });
-        console.log('yes check this ',results)
+        console.log("yes check this ", results);
     } catch (error) {
         next(error);
     }
@@ -259,5 +265,36 @@ export const sendEmails = async (req, res, next) => {
     } catch (error) {
         console.error("Error sending emails:", error);
         res.status(500).json({ error: "Error sending emails." });
+    }
+};
+
+export const getReceipt = async (req, res, next) => {
+    const {file_name} = req.params;
+    console.log('filename: ', file_name);
+    console.log(path.join(__dirname, "../", "uploads", file_name));
+    try {
+        const stream = fs.createReadStream(
+            path.join(__dirname, "../", "uploads", file_name)
+        );
+        stream.on("open", () => {
+            res.setHeader("Content-Type", "image/png");
+            stream.pipe(res);
+        });
+        stream.on("error", (err) => {
+            console.error("Error reading image file: ", err);
+            res.json({ success: false, data: "Image not found" });
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+export const downloadReceipt = async (req, res, next) => {
+    try {
+        res.download(
+            path.join(__dirname, "../uploads", file.filename),
+            file.originalname
+        );
+    } catch (error) {
+        next(error);
     }
 };
