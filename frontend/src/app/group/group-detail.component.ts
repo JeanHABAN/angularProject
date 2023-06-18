@@ -14,7 +14,19 @@ import { initial_state_value, UserService } from '../user/user.service';
   selector: 'app-group-detail',
   template: `
     <div >
-   
+      <header>
+        <nav>
+          <ul>
+            <li><a [routerLink]="['']">Home</a></li>
+            <li><a [routerLink]="['', 'group', 'list']">Groups</a></li>
+            <li><a [routerLink]="['', 'group', 'add']">Create group</a></li>
+            <li>
+              <a [routerLink]="['', 'group', 'request']">Pending Request</a>
+            </li>
+            <li><a [routerLink]="['']" (click)="logout()">Logout</a></li>
+          </ul>
+        </nav>
+      </header>
       <main class="container">
         <input
           type="text"
@@ -90,8 +102,30 @@ import { initial_state_value, UserService } from '../user/user.service';
         background-color: #f5f5f5;
       }
 
-     
-      
+      header {
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 25px 0 black;
+        z-index: 1;
+      }
+
+      header * {
+        display: inline;
+      }
+
+      header li {
+        margin: 20px;
+        margin-right: 20px;
+        font-size: 25px;
+      }
+      ,
       .mydata {
         margin-top: 80px;
       }
@@ -104,8 +138,16 @@ import { initial_state_value, UserService } from '../user/user.service';
         padding: 30px;
       }
 
-     
-      
+      header li a {
+        color: black;
+        text-decoration: none;
+      }
+      header button {
+        margin-right: 20px;
+        border-radius: 2px;
+      }
+
+      ,
       div {
         text-align: center;
         max-width: 600px;

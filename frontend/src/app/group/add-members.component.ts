@@ -138,6 +138,7 @@ export class AddMembersComponent {
 
   onCancel() {
     this.isCompleted.emit(true);
+    
   }
 
   // getunSelectedUsers(
