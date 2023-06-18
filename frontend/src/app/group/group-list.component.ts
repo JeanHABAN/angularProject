@@ -6,153 +6,87 @@ import { UserService, initial_state_value } from '../user/user.service';
 @Component({
   selector: 'app-group-list',
   template: `
-
-  <header >
-   <nav>
-                <ul>
-                    <li><a [routerLink]="['']">Home</a></li>
-                    <li><a [routerLink]="['', 'group', 'list']">Groups</a></li>
-                    <li><a [routerLink]="['', 'group', 'add']">Create group</a></li>
-                    <li><a [routerLink]="['', 'group', 'request']">Pending Request</a></li>
-                    <li><a [routerLink]="['']"  (click)="logout()">Logout</a></li>
-                </ul>
-    </nav>
-  </header>
- 
- 
-  <div class="container">
-  
-   
-    <div *ngIf="showMember">
-      <app-add-members
-        [groupId]="selectedGroupId"
-        (isCompleted)="receiveStatusAddingMember($event)"
-      />
+    <div class="container">
+      <h3>Group List</h3>
+      <div *ngIf="showMember">
+        <app-add-members
+          [groupId]="selectedGroupId"
+          (isCompleted)="receiveStatusAddingMember($event)"
+        />
+      </div>
+      <div>
+        <table>
+          <th>Title</th>
+          <th>Action</th>
+          <tr *ngFor="let g of groupsList">
+            <td>{{ g.title }}</td>
+            <td>
+              <button (click)="showAddMember(g._id)" [disabled]="showMember">
+                Add Members
+              </button>
+              <button
+                (click)="gotoAddTransaction(g._id)"
+                [disabled]="showMember"
+              >
+                Add Transactions
+              </button>
+              <button (click)="gotoDetails(g._id)" [disabled]="showMember">
+                Details
+              </button>
+              <button (click)="gotoReport(g._id)" [disabled]="showMember">
+                Report
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <div>
-      <table>
-        <th>Title</th>
-        <th>Action</th>
-        <tr *ngFor="let g of groupsList">
-          <td>{{ g.title }}</td>
-          <td>
-            <button (click)="showAddMember(g._id)" [disabled]="showMember">
-              Add Members
-            </button>
-            <button (click)="gotoAddTransaction(g._id)" [disabled]="showMember">
-              Add Transactions
-            </button>
-            <button (click)="gotoDetails(g._id)" [disabled]="showMember">
-              Details
-            </button>
-            <button (click)="gotoReport(g._id)" [disabled]="showMember">
-              Report
-            </button>
-           
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
   `,
-  styles: [`
+  styles: [
+    `
+      input[type='text'] {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        height: 20px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
 
-header {
-    background-color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 25px 0 black;
-    z-index: 1;
-}
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
 
-header * {
-    display: inline;
-}
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        color: blue;
+        font-size: 26px;
+      }
 
-header li {
-    margin: 20px;
-    margin-right: 20px;
-    font-size: 25px;
+      th {
+        background-color: #f2f2f2;
+      }
 
-},
-.mydata{
-  margin-top: 80px; 
-}
-.container{
-  height: 125vh;
-    background-image: url('https://mma.prnewswire.com/media/1498250/Splitwise_Logo.jpg?p=facebook');
-    background-size: cover;
-    font-family: sans-serif;
-    margin-top: 80px;
-    padding: 30px;
-}
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
 
-header li a {
-    color: black;
-    text-decoration: none;
-}
-header button {
-  margin-right: 20px;
-  border-radius: 2px;
-},
-
-
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  height: 20px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-div {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th,
-td {
-  padding: 8px;
-  text-align: left;
-  color: blue;
-  font-size: 26px;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-  
-}
-
-button {
-  margin-left: 10px;
-  font-size: 16px
-},
-td {
-  text-align: right; 
-}
-
-`],
+      button {
+        margin-left: 10px;
+        font-size: 16px;
+      }
+      ,
+      td {
+        text-align: right;
+      }
+    `,
+  ],
 })
 export class GroupListComponent {
-
   groupService = inject(GroupStateService);
   groupsList: IGroup[] = [];
   showMember: boolean = false;
@@ -160,34 +94,25 @@ export class GroupListComponent {
   private router = inject(Router);
   private userService = inject(UserService);
 
-  searchText: string= ''
+  searchText: string = '';
 
   logout() {
     localStorage.clear();
     this.userService.state.set(initial_state_value);
     this.router.navigate(['']);
-   
-    
   }
   constructor() {
-   
     this.groupService
       .getAllGroups()
       .subscribe((res) => (this.groupsList = res.data));
-     
   }
-  ngOnInit(){
+  ngOnInit() {
     this.groupService
       .getAllGroups()
       .subscribe((res) => (this.groupsList = res.data));
-     this.showMember = false;
+    this.showMember = false;
   }
-  // ngDoCheck(){
-  //   this.groupService
-  //     .getAllGroups()
-  //     .subscribe((res) => (this.groupsList = res.data));
-      
-  // }
+
   showAddMember(groupId: string) {
     this.showMember = true;
     this.selectedGroupId = groupId;
@@ -205,7 +130,5 @@ export class GroupListComponent {
   }
   gotoReport(groupId: string) {
     this.router.navigate(['', 'group', groupId, 'report']);
-   
   }
-  
 }

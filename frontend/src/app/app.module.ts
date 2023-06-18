@@ -12,6 +12,9 @@ import {
 import { RouterModule } from '@angular/router';
 import { UserService } from './user/user.service';
 import { addTokenInterceptor } from './add-token.interceptor';
+import { HearderComponent } from './hearder.component';
+import { FooterComponent } from './footer.component';
+
 
 
 const boostrap = function (userService: UserService) {
@@ -19,12 +22,13 @@ const boostrap = function (userService: UserService) {
     const state = localStorage.getItem('ANGULAR_PROJECT');
     if (state) {
       userService.state.set(JSON.parse(state));
+      console.log(userService.state())
     }
   };
 };
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent],
+  declarations: [AppComponent, WelcomeComponent, HearderComponent, FooterComponent],
   imports: [BrowserModule, AppRoutingModule],
   providers: [
     provideHttpClient(withInterceptors([addTokenInterceptor])),

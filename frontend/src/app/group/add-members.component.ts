@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { IMember, IUser, UserService, initial_state_value } from '../user/user.service';
+import {
+  IMember,
+  IUser,
+  UserService,
+  initial_state_value,
+} from '../user/user.service';
 import { GroupStateService, IInvitees } from './group-state.service';
 import { EmailService } from '../email.service';
 import { Router } from '@angular/router';
@@ -7,8 +12,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-members',
   template: `
-   
-    <div>
+    <div class="container">
       <h3>Members in group</h3>
       <table>
         <th>Name</th>
@@ -37,11 +41,46 @@ import { Router } from '@angular/router';
       </tr>
     </table>
     <div>
-      <button (click)="inviteMembers()">Save</button>
-      <button (click)="onCancel()">Cancel</button>
+      <button class="actBtn" (click)="inviteMembers()">Save</button>
+      <button class="actBtn" (click)="onCancel()">Cancel</button>
     </div>
   `,
-  styles: [``],
+  styles: [
+    `
+      .actBtn {
+        margin-left: 10px;
+        margin-top: 10px;
+      }
+
+      span {
+        color: blue;
+      }
+      /* .table-container {
+        max-width: 800px;
+        margin: 0 auto;
+      } */
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+    `,
+  ],
 })
 export class AddMembersComponent {
   @Input() groupId: string = '';
@@ -53,7 +92,7 @@ export class AddMembersComponent {
   private userService = inject(UserService);
   private groupService = inject(GroupStateService);
   private emailService = inject(EmailService);
-  private router = inject(Router)
+  private router = inject(Router);
   constructor() {}
 
   ngOnInit() {
@@ -138,7 +177,6 @@ export class AddMembersComponent {
 
   onCancel() {
     this.isCompleted.emit(true);
-    
   }
 
   // getunSelectedUsers(
@@ -164,6 +202,4 @@ export class AddMembersComponent {
       this.unselectedUsers
     );
   }
-
-
 }

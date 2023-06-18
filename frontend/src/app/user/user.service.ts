@@ -69,4 +69,5 @@ export const initial_state_value = {
   fullname: '',
   email: '',
   jwt: '',
+  
 };

@@ -92,14 +92,7 @@ header li {
 .mydata{
   margin-top: 80px; 
 }
-.container{
-  height: 125vh;
-    background-image: url('https://mma.prnewswire.com/media/1498250/Splitwise_Logo.jpg?p=facebook');
-    background-size: cover;
-    font-family: sans-serif;
-    margin-top: 80px;
-    padding: 30px;
-}
+
 
 header li a {
     color: black;
