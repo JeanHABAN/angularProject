@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { GroupStateService, ITransaction } from './group-state.service';
 import { IMember, UserService, initial_state_value } from '../user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -103,35 +103,28 @@ export class ReportComponent {
   private totalAmountOfGroup: number = 0;
 
   ngOnInit() {
-    this.groupService.getMembersFromGroup(this.group_id!).subscribe((res) => {
-      this.members = res.data;
-      this.groupService.getAllTransactions(this.group_id!).subscribe((res) => {
-        this.transactions = res.data;
-        this.totalAmountOfGroup = this.getTotalAmountForGroup();
-       
-        /////get single transaction by id 
-      //  this.groupService.getTransactionById(this.group_id!, this.trans_id! ).subscribe(console.log)
-        
-        for (let m of this.members) {
-
-          // this.memberBalances.push({
-          //   memberName: m.fullname,
-          //   spentAmount: this.getTotalAmountForMember(m.user_id),
-          //   oweAmount:
-          //     this.totalAmountOfGroup - this.getTotalAmountForMember(m.user_id),
-          // });
-          const spentAmount = this.getTotalAmountForMember(m.user_id);
-          const oweAmount =
-            spentAmount - (this.totalAmountOfGroup / this.members.length);
-          this.memberBalances.push({
-            memberName: m.fullname,
-            spentAmount,
-            oweAmount,
-          });
-        }
-      });
-    });
+    const members$ = this.groupService.getMembersFromGroup(this.group_id!);
+    const transactions$ = this.groupService.getAllTransactions(this.group_id!);
+    forkJoin([members$, transactions$])
+      .pipe(
+        map((res) => {
+          this.members = res[0].data;
+          this.transactions = res[1].data;
+          this.totalAmountOfGroup = this.getTotalAmountForGroup();
+          for (let m of this.members) {
+            this.memberBalances.push({
+              memberName: m.fullname,
+              spentAmount: this.getTotalAmountForMember(m.user_id),
+              oweAmount:
+                Math.round(this.totalAmountOfGroup / this.members.length) -
+                this.getTotalAmountForMember(m.user_id),
+            });
+          }
+        })
+      )
+      .subscribe();
   }
+  
   getTotalAmountForMember(memberId: string) {
     let total = 0;
     for (let t of this.transactions) {
@@ -161,16 +154,3 @@ export interface IBalanceReport {
   spentAmount: number;
   oweAmount: number;
 }
-
-// if (typeof Worker !== 'undefined') {
-//   // Create a new
-//   const worker = new Worker(new URL('./report.worker', import.meta.url));
-//   worker.onmessage = ({ data }) => {
-//     console.log(`page got message: ${data}`);
-//   };
-//   worker.postMessage('hello');
-// } else {
-//   // Web Workers are not supported in this environment.
-//   // You should add a fallback so that your program still executes correctly.
-// }
-

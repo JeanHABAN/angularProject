@@ -5,7 +5,7 @@ import { UserService, initial_state_value } from './user/user.service';
   selector: 'app-root',
   template: `
    <header >
-  <nav>
+     <nav>
                 <ul>
                     <li><a [routerLink]="['']">Home</a></li>
                     <li><a [routerLink]="['', 'group', 'list']">Groups</a></li>
@@ -64,7 +64,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    height: 80px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,7 +84,7 @@ header li a {
 header li {
     margin: 20px;
     margin-right: 20px;
-    font-size: 25px;
+    font-size:20px;
 
 }
 
@@ -94,7 +94,6 @@ header li {
 }
 .container{
   height: 125vh;
-    background-image: url('https://mma.prnewswire.com/media/1498250/Splitwise_Logo.jpg?p=facebook');
     background-size: cover;
     font-family: sans-serif;
     margin-top: 80px;
@@ -106,9 +105,7 @@ div {
   margin: 0 auto;
 }
 
-form{
-  
-}
+
   `],
 })
 export class AppComponent {

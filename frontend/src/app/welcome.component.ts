@@ -49,6 +49,9 @@ import { UserService, initial_state_value } from './user/user.service';
   color:#fff;
 }
 
+.container{
+  background-image: url('https://mma.prnewswire.com/media/1498250/Splitwise_Logo.jpg?p=facebook');
+}
   `
   ]
 })

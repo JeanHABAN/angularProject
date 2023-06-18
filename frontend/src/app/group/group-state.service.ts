@@ -63,14 +63,11 @@ export class GroupStateService {
       `${env.SERVER_URL}groups/${group_id}/members/${user_id}`
     );
   }
-
-  ///////get one transaction by id
-  // getTransactionById(group_id:string, transaction_id: string){
-  //   return this.http.get<IResponse<ITransaction>>(
-  //     `${env.SERVER_URL}groups/${group_id}/transactions/${transaction_id}`
-  //   )
-  // }
+  getReceipt(filename: string) {
+    return this.http.get(`${env.SERVER_URL}groups/receipt/${filename}`);
+  }
 }
+
 
 
 

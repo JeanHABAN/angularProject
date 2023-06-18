@@ -39,7 +39,7 @@ import { UserService, initial_state_value } from '../user/user.service';
     `
       .form {
         position: relative;
-        z-index: 1;
+        z-index: -1;
         background: #ffffff;
         max-width: 360px;
         margin: 0 auto 100px;

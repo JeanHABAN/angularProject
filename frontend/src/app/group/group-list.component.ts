@@ -7,11 +7,8 @@ import { UserService, initial_state_value } from '../user/user.service';
   selector: 'app-group-list',
   template: `
 
-
- 
   <div class="container">
   
-   
     <div *ngIf="showMember">
       <app-add-members
         [groupId]="selectedGroupId"
@@ -95,7 +92,6 @@ export class GroupListComponent {
     this.userService.state.set(initial_state_value);
     this.router.navigate(['']);
    
-    
   }
   constructor() {
    

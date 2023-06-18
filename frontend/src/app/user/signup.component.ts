@@ -26,7 +26,7 @@ import { UserService, IUser, IToken, IState } from './user.service';
 }
 .form {
   position: relative;
-  z-index: 1;
+  z-index: -1;
   background: #FFFFFF;
   max-width: 360px;
   margin: 0 auto 100px;
