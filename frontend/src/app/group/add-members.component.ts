@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { IMember, IUser, UserService } from '../user/user.service';
+import { IMember, IUser, UserService, initial_state_value } from '../user/user.service';
 import { GroupStateService, IInvitees } from './group-state.service';
 import { EmailService } from '../email.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-members',
   template: `
+   
     <div>
       <h3>Members in group</h3>
       <table>
@@ -39,7 +41,7 @@ import { EmailService } from '../email.service';
       <button (click)="onCancel()">Cancel</button>
     </div>
   `,
-  styles: [],
+  styles: [``],
 })
 export class AddMembersComponent {
   @Input() groupId: string = '';
@@ -51,6 +53,7 @@ export class AddMembersComponent {
   private userService = inject(UserService);
   private groupService = inject(GroupStateService);
   private emailService = inject(EmailService);
+  private router = inject(Router)
   constructor() {}
 
   ngOnInit() {
@@ -160,4 +163,6 @@ export class AddMembersComponent {
       this.unselectedUsers
     );
   }
+
+
 }

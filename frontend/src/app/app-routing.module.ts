@@ -6,7 +6,7 @@ import { checkTokenGuard } from './check-token.guard';
 import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
-  { path: '', component: WelcomeComponent, pathMatch: 'full' },
+  { path: '', component: WelcomeComponent, pathMatch: 'full' , title:"Home"},
   {
     path: 'user',
     loadChildren: () =>

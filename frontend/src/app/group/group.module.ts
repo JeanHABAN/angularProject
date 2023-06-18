@@ -30,20 +30,21 @@ import { FilterPipePipe } from './filter-pipe.pipe'; // -> imported filter pipe
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'list', component: GroupListComponent },
-      { path: 'add', component: AddGroupComponent },
+      { path: 'list', component: GroupListComponent, title:'list of my groups' },
+      { path: 'add', component: AddGroupComponent , title: 'Create new group'},
       {
         path: 'addmember',
-        component: AddMembersComponent,
+        component: AddMembersComponent
       },
       { path: ':group_id/detail', component: GroupDetailComponent },
-      { path: 'request', component: PendingRequestComponent },
-      // { path: ':group_id/transactions', component: PendingTransactionsComponent },
+      { path: 'request', component: PendingRequestComponent , title: 'Pending Request'},
+      
       {
         path: ':group_id/transactions/add',
         component: AddTransactionComponent,
       },
       { path: ':group_id/report', component: ReportComponent },
+   
     ]),
   ],
 })
