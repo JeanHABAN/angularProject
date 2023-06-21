@@ -87,7 +87,7 @@ h3{
 })
 export class AddTransactionComponent {
   private userService = inject(UserService)
-  transForm = inject(FormBuilder).group({
+    transForm = inject(FormBuilder).group({
     title: ['', Validators.required],
     description: ['', Validators.required],
     category: ['', Validators.required],
@@ -109,9 +109,8 @@ export class AddTransactionComponent {
     }
   }
   addTransaction() {
-    console.log('hello')
+    
     const date: Date = new Date(this.transForm.get('date')?.value!);
-    console.log('date: ', date);
     const form_data = new FormData();
     form_data.append('title', this.transForm.get('title')?.value!);
     form_data.append('description', this.transForm.get('description')?.value!);
