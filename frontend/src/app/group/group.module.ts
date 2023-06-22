@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 
 import { AddTransactionComponent } from './add-transaction.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FilterPipePipe } from './filter-pipe.pipe'; // -> imported filter pipe
+
 
 @NgModule({
   declarations: [
@@ -22,7 +22,6 @@ import { FilterPipePipe } from './filter-pipe.pipe'; // -> imported filter pipe
     PendingRequestComponent,
     TransactionComponent,
     ReportComponent,
-    FilterPipePipe,
     AddTransactionComponent,
   ],
   imports: [

@@ -2,8 +2,6 @@ import {
   Component,
   ElementRef,
   inject,
-  Pipe,
-  PipeTransform,
   ViewChild,
 } from '@angular/core';
 import { GroupStateService, IGroup, ITransaction } from './group-state.service';
