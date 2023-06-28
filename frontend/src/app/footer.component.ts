@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
         <p>The secret to managing your money is to know where it's going.</p>
       </section>
       <section id="section-b">
-        <p>Copy-right@2023 Jean & Duyen</p>
+        <p>Copy-right@2023 Jean Damour</p>
       </section>
     </footer>
   `,
